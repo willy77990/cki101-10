@@ -1,6 +1,7 @@
 import os
 import pymysql
 from flask import Flask, request, jsonify, render_template
+from google.cloud import storage
 
 app = Flask(__name__)
 
@@ -126,6 +127,38 @@ def update_user(user_id):
         return jsonify({'message': '更新成功'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/gcp')
+def gcp_page():
+    """渲染 GCP 儲存桶管理介面"""
+    return render_template('gcp.html')
+
+@app.route('/api/gcp/buckets', methods=['POST'])
+def list_gcp_buckets():
+    """列出指定 GCP Project 的所有 Storage Buckets"""
+    data = request.get_json()
+    project_id = data.get('project_id')
+    
+    if not project_id:
+        return jsonify({'error': '請提供 project_id'}), 400
+        
+    try:
+        # 使用 Application Default Credentials (ADC)
+        client = storage.Client(project=project_id)
+        buckets = list(client.list_buckets())
+        
+        result = []
+        for bucket in buckets:
+            result.append({
+                'name': bucket.name,
+                'location': bucket.location,
+                'created': bucket.time_created.strftime("%Y-%m-%d %H:%M:%S") if bucket.time_created else "N/A"
+            })
+            
+        return jsonify({'buckets': result})
+    except Exception as e:
+        # 處理憑證錯誤或權限不足
+        return jsonify({'error': f"無法存取專案 {project_id}：{str(e)}"}), 500
 
 if __name__ == '__main__':
     # 啟動伺服器前，先確保資料表已經建立

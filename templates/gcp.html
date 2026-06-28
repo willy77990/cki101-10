@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCP Cloud Storage 管理系統</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="background-glow gcp-glow"></div>
+    <main class="container">
+        <header>
+            <h1>GCP Storage 管理 <span>☁️</span></h1>
+            <p>輸入 Project ID 即可瀏覽雲端儲存桶 (Buckets)</p>
+        </header>
+
+        <section class="card form-section">
+            <h2 id="form-title">搜尋專案</h2>
+            <form id="gcp-form">
+                <div class="input-group">
+                    <label for="project-id">GCP Project ID</label>
+                    <input type="text" id="project-id" name="project_id" placeholder="例如：my-awesome-project-123456" required>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary" id="search-btn">搜尋 Buckets</button>
+                    <a href="/users" class="btn btn-secondary">切換至使用者管理</a>
+                </div>
+            </form>
+        </section>
+
+        <section class="card list-section">
+            <div class="section-header">
+                <h2>儲存桶列表</h2>
+                <div id="loading-spinner" class="spinner" style="display: none;"></div>
+            </div>
+            
+            <div class="table-container">
+                <table id="buckets-table">
+                    <thead>
+                        <tr>
+                            <th>Bucket 名稱</th>
+                            <th>位置 (Location)</th>
+                            <th>建立時間</th>
+                        </tr>
+                    </thead>
+                    <tbody id="buckets-tbody">
+                        <tr><td colspan="3" class="empty">請在上方輸入 Project ID 進行搜尋</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/gcp.js') }}"></script>
+</body>
+</html>
