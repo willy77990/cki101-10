@@ -32,3 +32,6 @@ coverage.xml
 
 # 其他專案相關暫存檔
 *.log
+
+# 資料庫本地資料夾
+db_data/

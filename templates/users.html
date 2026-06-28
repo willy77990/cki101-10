@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用者管理系統</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="background-glow"></div>
+    <main class="container">
+        <header>
+            <h1>使用者管理 <span>✨</span></h1>
+            <p>快速新增、編輯與刪除您的使用者資料</p>
+        </header>
+
+        <section class="card form-section">
+            <h2 id="form-title">新增使用者</h2>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+                
+                <div class="input-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" name="name" placeholder="請輸入姓名" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="age">年齡</label>
+                    <input type="number" id="age" name="age" placeholder="請輸入年齡" required min="1" max="150">
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary" id="submit-btn">新增</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn" style="display: none;">取消</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card list-section">
+            <h2>使用者列表</h2>
+            <div class="table-container">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>年齡</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-tbody">
+                        <!-- 資料會由 JavaScript 動態載入 -->
+                        <tr><td colspan="4" class="loading">資料載入中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
